@@ -1,3 +1,3 @@
 APEX Application for satisfy my needs
 
-used Oracle XE Data Base
+develop on OTN Oracle Prebuilt VM
