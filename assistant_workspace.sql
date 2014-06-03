@@ -20,7 +20,7 @@ end;
 prompt  WORKSPACE 4876305109140723
 --
 -- Workspace, User Group, User, and Team Development Export:
---   Date and Time:   15:24 Sunday June 1, 2014
+--   Date and Time:   15:36 Tuesday June 3, 2014
 --   Exported By:     ASSISTANT
 --   Export Type:     Workspace Export
 --   Version:         4.2.4.00.08
@@ -162,6 +162,46 @@ begin
     p_user_id => 'ASSISTANT',
     p_preference_name => 'FSP_IR_100_P18_W2665119855785495',
     p_attribute_value => '2668128787822083____2668128787822083');
+end;
+/
+begin
+  wwv_flow_api.create_preferences$ (
+    p_id => 2701708233564571,
+    p_user_id => 'ASSISTANT',
+    p_preference_name => 'FSP_IR_4000_P405_W3852329031687921',
+    p_attribute_value => '3853503855690337____REPORT');
+end;
+/
+begin
+  wwv_flow_api.create_preferences$ (
+    p_id => 2712401782609839,
+    p_user_id => 'ASSISTANT',
+    p_preference_name => 'FSP_IR_100_P22_W2699213684563927',
+    p_attribute_value => '2712131789609810____2712131789609810');
+end;
+/
+begin
+  wwv_flow_api.create_preferences$ (
+    p_id => 2734120071710531,
+    p_user_id => 'ASSISTANT',
+    p_preference_name => 'FSP4000_P706_R28719711014469983_SORT',
+    p_attribute_value => 'fsp_sort_6_desc');
+end;
+/
+begin
+  wwv_flow_api.create_preferences$ (
+    p_id => 2734221109710783,
+    p_user_id => 'ASSISTANT',
+    p_preference_name => 'FSP4000_P7_R40282027968411412_SORT',
+    p_attribute_value => 'fsp_sort_5_desc');
+end;
+/
+begin
+  wwv_flow_api.create_preferences$ (
+    p_id => 2734417815712003,
+    p_user_id => 'ASSISTANT',
+    p_preference_name => 'FSP_IR_4000_P547_W12110932631570416',
+    p_attribute_value => '12131926001571445____');
 end;
 /
 begin
@@ -334,6 +374,30 @@ end;
 /
 begin
   wwv_flow_api.create_preferences$ (
+    p_id => 2752418281595508,
+    p_user_id => 'ASSISTANT',
+    p_preference_name => 'FSP_IR_100_P24_W2748305345593259',
+    p_attribute_value => '2752119646595478____2752119646595478');
+end;
+/
+begin
+  wwv_flow_api.create_preferences$ (
+    p_id => 2758109650620952,
+    p_user_id => 'ASSISTANT',
+    p_preference_name => 'FSP4000_P300_R274135113431934049_SORT',
+    p_attribute_value => 'fsp_sort_1_desc');
+end;
+/
+begin
+  wwv_flow_api.create_preferences$ (
+    p_id => 2760112074621618,
+    p_user_id => 'ASSISTANT',
+    p_preference_name => 'FSP4000_P423_R172114705298474212_SORT',
+    p_attribute_value => 'fsp_sort_1_desc');
+end;
+/
+begin
+  wwv_flow_api.create_preferences$ (
     p_id => 2404210933652780,
     p_user_id => 'ASSISTANT',
     p_preference_name => 'FSP_IR_4350_P55_W10236304983033455',
@@ -383,6 +447,45 @@ begin
     p_app => 100,
     p_owner => 'ASSISTANT',
     p_access_date => to_date('201406011124','YYYYMMDDHH24MI'),
+    p_ip_address => '0:0:0:0:0:0:0:1',
+    p_remote_user => 'apex',
+    p_auth_result => 0,
+    p_custom_status_text => '');
+end;
+/
+begin
+  wwv_flow_api.create_user_access_log2$ (
+    p_login_name => 'ASSISTANT',
+    p_auth_method => 'Internal Authentication',
+    p_app => 4500,
+    p_owner => 'APEX_040200',
+    p_access_date => to_date('201406030431','YYYYMMDDHH24MI'),
+    p_ip_address => '0:0:0:0:0:0:0:1',
+    p_remote_user => 'apex',
+    p_auth_result => 0,
+    p_custom_status_text => '');
+end;
+/
+begin
+  wwv_flow_api.create_user_access_log2$ (
+    p_login_name => 'ASSISTANT',
+    p_auth_method => 'Application Express Authentication',
+    p_app => 100,
+    p_owner => 'ASSISTANT',
+    p_access_date => to_date('201406030449','YYYYMMDDHH24MI'),
+    p_ip_address => '0:0:0:0:0:0:0:1',
+    p_remote_user => 'apex',
+    p_auth_result => 0,
+    p_custom_status_text => '');
+end;
+/
+begin
+  wwv_flow_api.create_user_access_log2$ (
+    p_login_name => 'ASSISTANT',
+    p_auth_method => 'Internal Authentication',
+    p_app => 4500,
+    p_owner => 'APEX_040200',
+    p_access_date => to_date('201406021512','YYYYMMDDHH24MI'),
     p_ip_address => '0:0:0:0:0:0:0:1',
     p_remote_user => 'apex',
     p_auth_result => 0,
@@ -538,6 +641,19 @@ begin
     p_auth_method => 'Internal Authentication',
     p_app => 4500,
     p_owner => 'APEX_040200',
+    p_access_date => to_date('201406031531','YYYYMMDDHH24MI'),
+    p_ip_address => '0:0:0:0:0:0:0:1',
+    p_remote_user => 'apex',
+    p_auth_result => 0,
+    p_custom_status_text => '');
+end;
+/
+begin
+  wwv_flow_api.create_user_access_log2$ (
+    p_login_name => 'ASSISTANT',
+    p_auth_method => 'Internal Authentication',
+    p_app => 4500,
+    p_owner => 'APEX_040200',
     p_access_date => to_date('201406010830','YYYYMMDDHH24MI'),
     p_ip_address => '0:0:0:0:0:0:0:1',
     p_remote_user => 'apex',
@@ -552,6 +668,58 @@ begin
     p_app => 100,
     p_owner => 'ASSISTANT',
     p_access_date => to_date('201406010832','YYYYMMDDHH24MI'),
+    p_ip_address => '0:0:0:0:0:0:0:1',
+    p_remote_user => 'apex',
+    p_auth_result => 0,
+    p_custom_status_text => '');
+end;
+/
+begin
+  wwv_flow_api.create_user_access_log2$ (
+    p_login_name => 'ASSISTANT',
+    p_auth_method => 'Internal Authentication',
+    p_app => 4500,
+    p_owner => 'APEX_040200',
+    p_access_date => to_date('201406031152','YYYYMMDDHH24MI'),
+    p_ip_address => '0:0:0:0:0:0:0:1',
+    p_remote_user => 'apex',
+    p_auth_result => 0,
+    p_custom_status_text => '');
+end;
+/
+begin
+  wwv_flow_api.create_user_access_log2$ (
+    p_login_name => 'ASSISTANT',
+    p_auth_method => 'Application Express Authentication',
+    p_app => 100,
+    p_owner => 'ASSISTANT',
+    p_access_date => to_date('201406031210','YYYYMMDDHH24MI'),
+    p_ip_address => '0:0:0:0:0:0:0:1',
+    p_remote_user => 'apex',
+    p_auth_result => 0,
+    p_custom_status_text => '');
+end;
+/
+begin
+  wwv_flow_api.create_user_access_log2$ (
+    p_login_name => 'ASSISTANT',
+    p_auth_method => 'Internal Authentication',
+    p_app => 4500,
+    p_owner => 'APEX_040200',
+    p_access_date => to_date('201406031227','YYYYMMDDHH24MI'),
+    p_ip_address => '0:0:0:0:0:0:0:1',
+    p_remote_user => 'apex',
+    p_auth_result => 0,
+    p_custom_status_text => '');
+end;
+/
+begin
+  wwv_flow_api.create_user_access_log2$ (
+    p_login_name => 'ASSISTANT',
+    p_auth_method => 'Internal Authentication',
+    p_app => 4500,
+    p_owner => 'APEX_040200',
+    p_access_date => to_date('201406031247','YYYYMMDDHH24MI'),
     p_ip_address => '0:0:0:0:0:0:0:1',
     p_remote_user => 'apex',
     p_auth_result => 0,
@@ -669,13 +837,13 @@ end;
 prompt  SCHEMA ASSISTANT - User Interface Defaults, Table Defaults
 --
 -- Import using sqlplus as the Oracle user: APEX_040200
--- Exported 15:24 Sunday June 1, 2014 by: ASSISTANT
+-- Exported 15:36 Tuesday June 3, 2014 by: ASSISTANT
 --
  
 --------------------------------------------------------------------
 prompt User Interface Defaults, Attribute Dictionary
 --
--- Exported 15:24 Sunday June 1, 2014 by: ASSISTANT
+-- Exported 15:36 Tuesday June 3, 2014 by: ASSISTANT
 --
 -- SHOW EXPORTING WORKSPACE
  
