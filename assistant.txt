@@ -1,5 +1,0 @@
-﻿&SQLERRM.
--	kind store delete proccessing + button action
--	triggers with :new.activity='Y' replace to procedure add
-
-

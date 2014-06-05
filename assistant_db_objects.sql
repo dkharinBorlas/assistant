@@ -1,21 +1,21 @@
 --------------------------------------------------------
---  File created - Wednesday-June-04-2014   
+--  File created - Thursday-June-05-2014   
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Sequence ACC_ALLOCATIONS_S
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "ASSISTANT"."ACC_ALLOCATIONS_S"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 61 CACHE 10 NOORDER  NOCYCLE  NOPARTITION ;
+   CREATE SEQUENCE  "ASSISTANT"."ACC_ALLOCATIONS_S"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 101 CACHE 10 NOORDER  NOCYCLE  NOPARTITION ;
 --------------------------------------------------------
 --  DDL for Sequence ACC_ALLOCATION_ARTICLES_S
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "ASSISTANT"."ACC_ALLOCATION_ARTICLES_S"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 61 CACHE 10 NOORDER  NOCYCLE  NOPARTITION ;
+   CREATE SEQUENCE  "ASSISTANT"."ACC_ALLOCATION_ARTICLES_S"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 81 CACHE 10 NOORDER  NOCYCLE  NOPARTITION ;
 --------------------------------------------------------
 --  DDL for Sequence ACC_ALLOCATION_PAYS_S
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "ASSISTANT"."ACC_ALLOCATION_PAYS_S"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 51 CACHE 10 NOORDER  NOCYCLE  NOPARTITION ;
+   CREATE SEQUENCE  "ASSISTANT"."ACC_ALLOCATION_PAYS_S"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 71 CACHE 10 NOORDER  NOCYCLE  NOPARTITION ;
 --------------------------------------------------------
 --  DDL for Sequence ACC_CREDITS_S
 --------------------------------------------------------
@@ -40,12 +40,12 @@
 --  DDL for Sequence ACC_MINUS_HEADERS_S
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "ASSISTANT"."ACC_MINUS_HEADERS_S"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 61 CACHE 10 NOORDER  NOCYCLE  NOPARTITION ;
+   CREATE SEQUENCE  "ASSISTANT"."ACC_MINUS_HEADERS_S"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 121 CACHE 10 NOORDER  NOCYCLE  NOPARTITION ;
 --------------------------------------------------------
 --  DDL for Sequence ACC_MINUS_SITES_S
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "ASSISTANT"."ACC_MINUS_SITES_S"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 311 CACHE 10 NOORDER  NOCYCLE  NOPARTITION ;
+   CREATE SEQUENCE  "ASSISTANT"."ACC_MINUS_SITES_S"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 341 CACHE 10 NOORDER  NOCYCLE  NOPARTITION ;
 --------------------------------------------------------
 --  DDL for Sequence ACC_OPPORTUNITY_S
 --------------------------------------------------------
@@ -55,7 +55,7 @@
 --  DDL for Sequence ACC_POCKETS_S
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "ASSISTANT"."ACC_POCKETS_S"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 111 CACHE 10 NOORDER  NOCYCLE  NOPARTITION ;
+   CREATE SEQUENCE  "ASSISTANT"."ACC_POCKETS_S"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 131 CACHE 10 NOORDER  NOCYCLE  NOPARTITION ;
 --------------------------------------------------------
 --  DDL for Sequence PPL_PEOPLES_S
 --------------------------------------------------------
@@ -351,15 +351,24 @@ FROM ACC_ALLOCATION_ARTICLES_T aa
  where a.id_ = ap.alloc_id_
    and p.id_ = ap.pocket_id_;
 --------------------------------------------------------
+--  DDL for View ACC_BALANSE_V
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE EDITIONABLE VIEW "ASSISTANT"."ACC_BALANSE_V" ("BALANSE_") AS 
+  select sum(p."summ_rub_") BALANSE_
+  from assistant.acc_pockets_v p
+  where p.Active_ = 'Y';
+--------------------------------------------------------
 --  DDL for View ACC_POCKETS_V
 --------------------------------------------------------
 
-  CREATE OR REPLACE FORCE EDITIONABLE VIEW "ASSISTANT"."ACC_POCKETS_V" ("ID_", "NAME_", "KIND_STORE_ID_", "KIND_STORE_NAME_", "SUMM_", "SUMM_BUSY_", "SUMM_AVLB_", "CURREN_", "ACTIVE_") AS 
+  CREATE OR REPLACE FORCE EDITIONABLE VIEW "ASSISTANT"."ACC_POCKETS_V" ("ID_", "NAME_", "KIND_STORE_ID_", "KIND_STORE_NAME_", "SUMM_", "summ_rub_", "SUMM_BUSY_", "SUMM_AVLB_", "CURREN_", "ACTIVE_") AS 
   select p.id_ id_,
        p.name_ name_,
        p.kind_store_id_ kind_store_id_,
        ks.name_ kind_store_name_,
        p.summ_ summ_,
+       p.summ_*c.QOUTE_ summ_rub_,
        (select nvl(sum(ap.summ_),0)
           from assistant.acc_allocation_pays_t ap
          where p.id_ = ap.pocket_id_) summ_busy_,
@@ -368,8 +377,8 @@ FROM ACC_ALLOCATION_ARTICLES_T aa
                     where p.id_ = ap.pocket_id_)) summ_avlb_,
        p.curren_ curren_,
        p.active_
-  from assistant.acc_pockets_t p, assistant.acc_kinds_store_t ks
-  where p.kind_store_id_ = ks.id_;
+  from assistant.acc_pockets_t p, assistant.acc_kinds_store_t ks, assistant.ACC_CURRENCY_T c
+  where p.kind_store_id_ = ks.id_ and p.curren_ = c.ABRIVEATURE_;
 REM INSERTING into ASSISTANT.ACC_LOOKUP_T
 SET DEFINE OFF;
 Insert into ASSISTANT.ACC_LOOKUP_T (ID_,NAME_,VALUE_DISPLAY_,VALUE_RETURN_,OUTPUT_PRIORITET_) values (31,'ACC_OBJECTS_PARENT_COLUMNS','ALLOCATION_PAY','ALLOC_PAY_ID_',null);
@@ -1091,6 +1100,8 @@ end acc_checkers;
   -- Author  : DKHARIN
   -- Created : 08.03.2014 18:35:51
   -- Purpose : ACCOUNTENT
+  
+ function get_balanse return string;
 
   function get_lookup_value(p_lookup_name    varchar2,
                             p_lookup_display varchar2) return varchar2;
@@ -1309,6 +1320,18 @@ end acc_checkers;
   -- Purpose : ACCOUNTENT
 
   custom_error exception;
+  
+function get_balanse return string as
+    v_balanse number;
+  begin
+    select b.balanse_
+      into v_balanse
+      from acc_balanse_v b;
+    return to_char(v_balanse)||'RUB';
+  exception
+    when others then
+      raise_application_error(-20001, 'ERROR | FAILED GET BALANSE!!!', true);
+  end;
 
   function get_lookup_value(p_lookup_name    varchar2,
                             p_lookup_display varchar2) return varchar2 as
@@ -1612,13 +1635,14 @@ end acc_checkers;
     v_alloc_summ    acc_allocation_pays_v.summ_alloc_%type;
     v_summ_pay      acc_allocation_pays_v.summ_pay_%type;
     v_alloc_id      acc_allocation_pays_v.alloc_id_%type;
+    v_summ_pay_minus acc_allocation_pays_v.summ_minus_%type;
     v_curren        acc_allocation_pays_v.curren_%type := get_acc_object_currency(p_id          => p_id,
                                                                                   p_object_name => 'ALLOCATION_PAY');
   
     v_summ_min acc_allocations_v.summ_min_%type;
   begin
-    select ap.summ_pay_, ap.pck_summ_avlb_, ap.summ_alloc_, ap.ALLOC_ID_
-      into v_summ_pay, v_pck_summ_avlb, v_alloc_summ, v_alloc_id
+    select ap.summ_pay_, ap.pck_summ_avlb_, ap.summ_alloc_, ap.ALLOC_ID_, ap.summ_minus_
+      into v_summ_pay, v_pck_summ_avlb, v_alloc_summ, v_alloc_id, v_summ_pay_minus
       from acc_allocation_pays_v ap
      where ap.id_ = p_id;
     if v_curren <>
@@ -1634,15 +1658,11 @@ end acc_checkers;
                               true);
     end if;
   
-    select a.summ_min_
-      into v_summ_min
-      from acc_allocations_v a
-     where a.id_ = v_alloc_id;
-    if p_summ < v_summ_min then
+    if p_summ < v_summ_pay_minus then
       raise_application_error(-20001,
-                              'ERROR | SUMM MINUS GRATHER SUMM ALLOCATION !!!',
+                              'ERROR | SUMM PAY MINUS GRATHER NEW SUMM ALLOCATION PAY!!!',
                               true);
-    end if;
+  end if;
   
     /*    dbms_output.put_line(p_summ || ',' || p_pocket_id || ',' ||
     p_summ_minus);*/
@@ -1856,7 +1876,9 @@ end acc_checkers;
     v_all_pay        acc_allocation_pays_v%rowtype;
     v_summ_spend     acc_minus_headers_t.summ_%type := 0;
     v_summ_spend_cur acc_minus_headers_t.summ_%type := 0;
-    v_summ_have      number;
+    v_summ_have      acc_allocations_v.summ_have_%type;
+    v_summ_min        acc_allocations_v.summ_min_%type;
+    v_alloc_summ acc_allocations_v.summ_%type;
     v_minus_id       acc_minus_headers_t.id_%type;
   begin
     if 'Y' <>
@@ -1866,13 +1888,18 @@ end acc_checkers;
                               'ERROR  | ALLOCATION NOT ACTIVE !!!',
                               true);
     end if;
-    select summ_have_
-      into v_summ_have
+    select summ_have_, summ_min_, summ_
+      into v_summ_have, v_summ_min, v_alloc_summ
       from acc_allocations_v a
      where a.id_ = p_alloc_id;
     if v_summ_have < p_summ then
       raise_application_error(-20001,
                               'ERROR  |  INSUFFICIENT ALLOCATED MONEY !!!',
+                              true);
+    end if;
+    if v_alloc_summ < (p_summ + v_summ_min) then
+      raise_application_error(-20001,
+                              'ERROR  |  SUMM ALLOCATION MONEY LESS FUTURE SUMM ALLOCATION MINUS !!!',
                               true);
     end if;
     v_minus_id := minus_header_add(p_alloc_id => p_alloc_id,
