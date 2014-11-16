@@ -1,5 +1,1 @@
-APEX Application for satisfy my needs
-
-develop on OTN Oracle Prebuilt VM
-
-Project developing now.
+It is Application for study facilities APEX
